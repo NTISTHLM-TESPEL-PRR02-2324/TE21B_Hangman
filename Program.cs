@@ -9,19 +9,64 @@
          Rita ut en bit till av gubben
 */
 
+/*
+  - Vinna
+  - Förlora
+  - (Rita gubbe?)
+*/
+
+// -- Väl ett ord
 string correctWord = "banana";
 
 Console.WriteLine($"Antal tecken i ordet: {correctWord.Length}");
 
-List<string> underlines = new();
-for (int i = 0; i < correctWord.Length; i++)
+List<string> underlines = MakeUnderlines(correctWord);
+
+while (underlines.Contains("_"))
 {
-  underlines.Add("_");
+  // -- Skriv ut nuvarande status för ordet
+  Console.WriteLine(string.Join(" ", underlines));
+
+  // -- Gissar en bokstav
+  string guessLetter = GimmeGuess();
+
+  // -- Kolla om bokstav är i ordet
+  if (correctWord.Contains(guessLetter))
+  {
+    for (int i = 0; i < correctWord.Length; i++)
+    {
+      if (correctWord[i].ToString() == guessLetter)
+      {
+        underlines[i] = guessLetter;
+      }
+    }
+  }
+  else
+  {
+    Console.WriteLine("NOT EXISTS");
+  }
 }
 
-Console.WriteLine(string.Join(" ", underlines));
-
-string guessLetter = Console.ReadLine().First().ToString();
-
+Console.WriteLine("CONGRATS");
 
 Console.ReadLine();
+
+static string GimmeGuess()
+{
+  string guessLetter = "";
+
+  guessLetter = Console.ReadLine();
+  guessLetter = guessLetter.First().ToString().ToLower();
+  return guessLetter;
+}
+
+static List<string> MakeUnderlines(string correctWord)
+{
+  List<string> underlines = new();
+  for (int i = 0; i < correctWord.Length; i++)
+  {
+    underlines.Add("_");
+  }
+
+  return underlines;
+}
