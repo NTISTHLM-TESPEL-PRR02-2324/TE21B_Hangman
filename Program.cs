@@ -22,8 +22,12 @@ Console.WriteLine($"Antal tecken i ordet: {correctWord.Length}");
 
 List<string> underlines = MakeUnderlines(correctWord);
 
-while (underlines.Contains("_"))
+int guessesLeft = 7;
+
+while (underlines.Contains("_") && guessesLeft > 0)
 {
+  Console.WriteLine($"Du har {guessesLeft} gissningar kvar");
+
   // -- Skriv ut nuvarande status för ordet
   Console.WriteLine(string.Join(" ", underlines));
 
@@ -44,10 +48,19 @@ while (underlines.Contains("_"))
   else
   {
     Console.WriteLine("NOT EXISTS");
+    guessesLeft--;
   }
 }
 
-Console.WriteLine("CONGRATS");
+if (guessesLeft == 0)
+{
+  Console.WriteLine("LOSER");
+
+}
+else
+{
+  Console.WriteLine("CONGRATS");
+}
 
 Console.ReadLine();
 
@@ -55,8 +68,12 @@ static string GimmeGuess()
 {
   string guessLetter = "";
 
-  guessLetter = Console.ReadLine();
-  guessLetter = guessLetter.First().ToString().ToLower();
+  guessLetter = Console.ReadLine().ToLower();
+  if (guessLetter.Length > 1)
+  {
+    guessLetter = guessLetter.First().ToString();
+  }
+
   return guessLetter;
 }
 
